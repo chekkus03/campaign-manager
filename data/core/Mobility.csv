@@ -1,0 +1,5 @@
+mobility_id,name,rank,fuel_per_hex
+foot,Foot,1,0
+mot,Motorized,2,
+mech,Mechanized,3,
+armd,Armored,4,
