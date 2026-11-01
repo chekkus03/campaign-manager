@@ -1,0 +1,10 @@
+key,value,note
+max_corps,3,
+max_divs_per_corps,4,
+max_regs_per_div,3,
+max_bns_per_reg,3,
+max_taskforces,8,
+max_bns_per_tf,3,
+id_max_corps,11,ID range 1-11
+id_max_div,106,ID range 1-106
+id_max_reg,700,ID range 1-700
