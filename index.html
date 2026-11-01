@@ -1,10 +1,436 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <Title>Campaign Manager</Title>
-  </head>
-  <body>
-    <h1>Campaign Manager Coming soon!</h1>
-    <p>This is where our app will live.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strategic Campaign & Regimental Manager</title>
+  <style>
+    :root {
+      --bg-color: #121417;
+      --card-bg: #1c2026;
+      --panel-bg: #252a34;
+      --accent-color: #d97706;
+      --accent-hover: #b45309;
+      --text-color: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --danger-color: #ef4444;
+      --success-color: #22c55e;
+      --sidebar-width: 320px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.4;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* SPLASH SCREEN */
+    #splash-screen {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-color: var(--bg-color);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .splash-card {
+      background-color: var(--card-bg);
+      border: 2px solid var(--accent-color);
+      padding: 30px;
+      border-radius: 8px;
+      width: 440px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .splash-card h1 { font-size: 1.5rem; color: var(--accent-color); margin-bottom: 8px; }
+    .splash-card p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
+
+    /* COLLAPSIBLE SIDEBAR */
+    #sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--card-bg);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.25s ease;
+      z-index: 100;
+    }
+    #sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-width)); }
+    .sidebar-header {
+      padding: 12px;
+      background-color: var(--panel-bg);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sidebar-content { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; }
+    .tree-node { margin-left: 10px; border-left: 1px dashed var(--border-color); padding-left: 8px; }
+    .tree-item {
+      padding: 5px 8px; font-size: 0.82rem; cursor: pointer; border-radius: 4px;
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;
+      word-break: break-word; color: var(--text-color);
+    }
+    .tree-item:hover { background-color: var(--panel-bg); }
+    .tree-item.active { background-color: var(--accent-color); color: #fff; }
+    .tree-item.bad { background-color: #7f1d1d; color: #fecaca; border-left: 4px solid #ef4444; }
+    .tree-item.bad:hover { background-color: #991b1b; }
+    .tree-item.bad.active { background-color: #b91c1c; color: #fff; outline: 2px solid #fecaca; }
+
+    .sidebar-section-divider {
+      border-top: 2px solid var(--border-color);
+      margin: 15px 0 10px 0;
+      padding-top: 10px;
+    }
+
+    .sidebar-footer {
+      padding-top: 10px;
+      margin-top: auto;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* FLAG & NATION HEADER IN SIDEBAR */
+    .sidebar-nation-box {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sidebar-flag-img {
+      width: 50px;
+      height: 30px;
+      object-fit: cover;
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+    }
+    .sidebar-nation-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+    }
+
+    /* MAIN WORKSPACE */
+    #main-wrapper { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    .top-nav {
+      background-color: var(--card-bg); border-bottom: 1px solid var(--border-color);
+      padding: 8px 15px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .breadcrumbs { display: flex; gap: 8px; align-items: center; font-size: 0.85rem; font-weight: bold; }
+    .breadcrumbs a { color: var(--accent-color); text-decoration: none; cursor: pointer; }
+    .breadcrumbs a:hover { text-decoration: underline; }
+
+    .content-area { flex: 1; padding: 15px; overflow-y: auto; }
+
+    /* UI COMPONENTS */
+    .toolbar { background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 10px; margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; border-radius: 4px; }
+    .btn-group { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    button { background-color: var(--panel-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+    button:hover { background-color: #2e3545; }
+    button.primary { background-color: var(--accent-color); border-color: var(--accent-color); color: #fff; }
+    button.primary:hover { background-color: var(--accent-hover); }
+    button.danger { background-color: var(--danger-color); border-color: var(--danger-color); color: #fff; }
+    button.success { background-color: var(--success-color); border-color: var(--success-color); color: #fff; }
+
+    .icon-btn {
+      background: transparent; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: var(--text-color);
+    }
+    .icon-btn:hover { background-color: var(--panel-bg); }
+
+    .echelon-header { background-color: var(--card-bg); border: 2px solid var(--accent-color); padding: 15px; margin-bottom: 15px; border-radius: 4px; }
+    .header-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 12px; }
+    .field-group { display: flex; flex-direction: column; gap: 4px; }
+    label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: bold; }
+    input[type="text"], input[type="number"], select { background-color: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-color); padding: 6px 10px; border-radius: 4px; font-size: 0.9rem; }
+    
+    .stat-display-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; background-color: var(--bg-color); padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); text-align: center; }
+    .stat-box { display: flex; flex-direction: column; }
+    .stat-box .val { font-size: 1.1rem; font-weight: bold; color: var(--accent-color); }
+    .stat-box .lbl { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; }
+
+    .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 4px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th { text-align: left; color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; padding: 4px; border-bottom: 1px solid var(--border-color); }
+    td { padding: 4px; vertical-align: middle; }
+    .stepper { display: flex; align-items: center; gap: 4px; }
+    .stepper-btn { width: 22px; height: 22px; padding: 0; display: flex; align-items: center; justify-content: center; }
+    .qty-val { font-weight: bold; width: 18px; text-align: center; display: inline-block; }
+
+    textarea { width: 100%; height: 200px; background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 10px; font-family: monospace; font-size: 0.85rem; border-radius: 4px; }
+    
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); z-index: 10000; display: flex; align-items: center; justify-content: center; }
+    .modal-card { background-color: var(--card-bg); border: 2px solid var(--border-color); padding: 25px; border-radius: 6px; width: 500px; max-height: 85vh; overflow-y: auto; }
+    .hidden { display: none !important; }
+    .detached-badge { background-color: #7c2d12; color: #fdba74; font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; font-weight: bold; text-transform: uppercase; }
+    .warning-banner { background-color: #7c2d12; color: #fed7aa; padding: 8px 12px; border-radius: 4px; font-size: 0.82rem; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .section-header-line { border-bottom: 2px solid var(--border-color); margin: 25px 0 15px 0; padding-bottom: 6px; }
+    
+    .campaign-root-link {
+      background: none; border: none; color: var(--accent-color); font-weight: bold; cursor: pointer; text-align: left; padding: 0; font-size: 0.95rem; width: 100%;
+    }
+    .campaign-root-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- SPLASH SCREEN MENU -->
+  <div id="splash-screen">
+    <div class="splash-card">
+      <h1>Campaign Launcher</h1>
+      <p>Open an existing campaign file or connect to Google Drive.</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button class="primary" style="padding: 10px;" onclick="showNewCampaignModal()">+ Create New Campaign Roster</button>
+        <button onclick="document.getElementById('cloud-drive-input').click()">📂 Open Local File (.json)</button>
+        <input type="file" id="cloud-drive-input" class="hidden" accept=".json" onchange="loadCampaignFromFile(event)">
+        <button onclick="openGoogleDrivePicker()">☁️ Open from Google Drive</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEW CAMPAIGN CREATION MODAL -->
+  <div id="new-campaign-modal" class="modal-overlay hidden">
+    <div class="modal-card" style="width: 420px; text-align: center;">
+      <h3>New Campaign Setup</h3>
+      <div class="field-group" style="margin: 15px 0; text-align: left;">
+        <label>Campaign Name</label>
+        <input type="text" id="new-camp-name" placeholder="e.g. Northwest Europe 1944">
+      </div>
+      <div class="field-group" style="margin: 15px 0; text-align: left;">
+        <label>Select Nation / Faction</label>
+        <select id="new-camp-nation">
+          <option value="Germany">Germany</option>
+          <option value="United Kingdom">United Kingdom</option>
+          <option value="United States">United States</option>
+          <option value="Canada">Canada</option>
+        </select>
+      </div>
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button onclick="hideNewCampaignModal()">Cancel</button>
+        <button class="primary" onclick="initiateNewCampaign()">Create Roster</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAVE MODAL POPUP -->
+  <div id="save-modal" class="modal-overlay hidden">
+    <div class="modal-card" style="width: 380px; text-align: center;">
+      <h3>Save Roster JSON</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin: 15px 0;">Select your preferred storage destination:</p>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+        <button class="primary" style="padding: 10px;" onclick="executeSave('local')">📁 Save to Local Files (.json)</button>
+        <button class="primary" style="padding: 10px; background-color: #2563eb; border-color: #2563eb;" onclick="executeSave('drive')">☁️ Save to Google Drive Integration</button>
+      </div>
+      <button onclick="document.getElementById('save-modal').classList.add('hidden')">Cancel</button>
+    </div>
+  </div>
+
+  <!-- CODEX MODAL -->
+  <div id="codex-modal" class="modal-overlay hidden">
+    <div class="modal-card" style="width: 650px; max-height: 80vh;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+        <h3 style="color: var(--accent-color);">📖 Campaign Codex & Combat Rules</h3>
+        <button class="danger" style="padding: 2px 8px;" onclick="toggleCodexModal()">Close</button>
+      </div>
+      <div style="font-size: 0.85rem; display: flex; flex-direction: column; gap: 15px; color: var(--text-color); overflow-y: auto; max-height: 60vh; padding-right: 5px;">
+        <div style="background: var(--panel-bg); padding: 10px; border-radius: 4px;">
+          <h4 style="color: var(--accent-color); margin-bottom: 4px;">1. Battalion-to-Regiment Composition Rules</h4>
+          <p style="color: var(--text-muted); font-size: 0.78rem; margin-bottom: 6px;">Every Regiment must contain exactly 3 Battalions. The combination determines the Regiment Type.</p>
+          <ul style="padding-left: 16px; display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem;">
+            <li><b>Infantry Regiment:</b> Exactly 3 Infantry Battalions.</li>
+            <li><b>Motorized Regiment:</b> Exactly 3 Infantry Battalions + all equipped with transport.</li>
+            <li><b>Mechanized Regiment:</b> At least 2 Armored Infantry Battalions + 3rd slot (Tank, Recon, or Combat Engineer).</li>
+            <li><b>Armored Regiment:</b> At least 2 Tank Battalions + 3rd slot (Armored Infantry, Tank Destroyer, or Recon).</li>
+            <li><b>Artillery Regiment:</b> At least 2 Field Artillery Battalions + 3rd slot (Tank Destroyer, Field Artillery, or Combat Engineer).</li>
+          </ul>
+        </div>
+        <div style="background: var(--panel-bg); padding: 10px; border-radius: 4px;">
+          <h4 style="color: var(--accent-color); margin-bottom: 4px;">2. Regiment-to-Division Composition Rules</h4>
+          <p style="color: var(--text-muted); font-size: 0.78rem; margin-bottom: 6px;">Every Division must contain exactly 3 Regiments.</p>
+          <ul style="padding-left: 16px; display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem;">
+            <li><b>Infantry Division:</b> 2 Infantry Regiments + 1 Artillery Regiment.</li>
+            <li><b>Motorized Division:</b> 2 Motorized Regiments + 1 Artillery Regiment.</li>
+            <li><b>Mechanized Division:</b> 2 Mechanized Regiments + 1 Artillery Regiment. *(Override: [1 Mech + 1 Inf + 1 Arty] defaults to Infantry Division)*</li>
+            <li><b>Armored Division:</b> [1 Armored Regiment + 1 Mechanized Regiment + 1 Artillery Regiment] OR [2 Armored Regiments + 1 Artillery Regiment].</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM DETACH TO TASKFORCE MODAL -->
+  <div id="detach-modal" class="modal-overlay hidden">
+    <div class="modal-card" style="width: 400px;">
+      <h3>Detach Battalion to Task Force</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin: 10px 0 15px 0;">Select the destination Task Force for deployment:</p>
+      
+      <div class="field-group" style="margin-bottom: 20px;">
+        <label>Available Task Forces</label>
+        <select id="detach-tf-select" style="width: 100%;"></select>
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button onclick="closeDetachModal()">Cancel</button>
+        <button class="primary" onclick="confirmDetachBattalion()">Confirm Detachment</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="clear-reg-modal" class="modal-overlay hidden">
+    <div class="modal-card" style="width: 460px;">
+      <h3 style="color:#f87171;">Clear types &amp; squads</h3>
+      <div id="clear-reg-body" style="margin: 12px 0 18px 0; font-size:0.9rem;"></div>
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button onclick="closeClearRegiment()">Cancel</button>
+        <button class="danger" onclick="confirmClearRegiment()">Erase types &amp; squads</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS & TOOLS MODAL -->
+  <div id="settings-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3>⚙️ Settings, Composition Rules & DB</h3>
+        <button class="danger" onclick="toggleSettingsModal()">Close</button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div style="background: var(--panel-bg); padding: 12px; border-radius: 4px; display: flex; flex-direction: column; gap: 10px;">
+          <h4 style="color: var(--accent-color);">3x3 Hierarchy Composition Rules</h4>
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.85rem; text-transform:none;">
+            <input type="checkbox" id="setting-enforce-reg-rules" checked onchange="appSettings.enforceRegRules = this.checked; updateAllHierarchyAutoTypes(); renderEchelonView();"> Enforce Strict Regiment Composition Rules
+          </label>
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.85rem; text-transform:none;">
+            <input type="checkbox" id="setting-enforce-div-rules" checked onchange="appSettings.enforceDivRules = this.checked; updateAllHierarchyAutoTypes(); renderEchelonView();"> Enforce Strict Division Composition Rules
+          </label>
+        </div>
+
+        <div style="background: var(--panel-bg); padding: 12px; border-radius: 4px;">
+          <h4 style="color: var(--accent-color); margin-bottom: 8px;">Unit Database Config (CSV Backend)</h4>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">Edit raw CSV text or fetch from a published Google Sheets CSV link.</p>
+          
+          <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+            <input type="text" id="catalog-url-input" placeholder="Google Sheets Published CSV Link" style="flex: 1;">
+            <button class="primary" onclick="fetchRemoteCatalog()">Fetch Cloud CSV</button>
+          </div>
+
+          <div class="toolbar" style="margin-bottom: 8px;">
+            <div class="btn-group">
+              <button class="primary" onclick="applyCatalogFromText()">Apply Raw CSV Text</button>
+              <button onclick="document.getElementById('load-catalog-input').click()">Upload CSV</button>
+              <input type="file" id="load-catalog-input" class="hidden" accept=".csv" onchange="loadCatalogFile(event)">
+            </div>
+            <button onclick="exportCatalogCSV()">Export CSV</button>
+          </div>
+          <textarea id="catalog-textarea" style="height: 120px;"></textarea>
+        </div>
+
+        <div style="background: var(--panel-bg); padding: 12px; border-radius: 4px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <h4 style="color: var(--accent-color);">Campaign Casualty & Event Log</h4>
+            <button class="danger" style="padding: 2px 6px;" onclick="clearLog()">Clear Log</button>
+          </div>
+          <div id="log-container" style="background-color: var(--bg-color); height: 140px; overflow-y: auto; padding: 8px; font-family: monospace; font-size: 0.75rem; border-radius: 4px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLLAPSIBLE SIDEBAR -->
+  <div id="sidebar">
+    <div class="sidebar-header">
+      <span style="font-weight: bold; font-size: 0.9rem;">Roster Navigation</span>
+      <button style="padding: 2px 6px;" onclick="toggleSidebar()">◀</button>
+    </div>
+    <div class="sidebar-content">
+      <div class="sidebar-nation-box">
+        <img id="sidebar-flag-img" class="sidebar-flag-img" src="" alt="Flag">
+        <div class="sidebar-nation-info">
+          <div id="sidebar-campaign-title" style="font-weight: bold; color: var(--accent-color); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-</div>
+          <div id="sidebar-nation-title" style="font-size: 0.75rem; color: var(--text-muted);">-</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 10px;">
+        <button class="campaign-root-link" onclick="navigateTo('campaign')">
+          Campaign Root
+        </button>
+      </div>
+
+      <label>Echelon Hierarchy Tree</label>
+      <div id="sidebar-tree"></div>
+
+      <div class="sidebar-section-divider">
+        <label>Operational Task Forces</label>
+        <div id="sidebar-taskforces" style="margin-top: 5px;"></div>
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="icon-btn" onclick="exitToSplash()" title="Exit Menu" style="width: 100%; justify-content: flex-start; gap: 8px; color: var(--danger-color);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Exit Menu</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN WORKSPACE -->
+  <div id="main-wrapper">
+    <div class="top-nav">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button onclick="toggleSidebar()">☰ Sidebar</button>
+        <div class="breadcrumbs" id="breadcrumb-bar">
+          <a onclick="navigateTo('campaign')">Campaign</a>
+        </div>
+      </div>
+      <div class="btn-group" style="align-items: center;">
+        <!-- MONOCHROME OPEN BOOK CODEX ICON -->
+        <button class="icon-btn" onclick="toggleCodexModal()" title="Codex & Rules">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+        </button>
+        <button class="icon-btn" onclick="openSaveModal()" title="Save Roster JSON">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+        </button>
+        <button class="icon-btn" onclick="toggleSettingsModal()" title="Settings & DB">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- MAIN VIEW AREA -->
+    <div class="content-area" id="echelon-view-container"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
 </html>
