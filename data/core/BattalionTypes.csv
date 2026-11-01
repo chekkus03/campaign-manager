@@ -1,0 +1,8 @@
+type_id,name,truck_eligible,sort,nations,active
+bn_inf,Infantry,TRUE,1,ALL,TRUE
+bn_ainf,Armored Infantry,FALSE,2,ALL,TRUE
+bn_tank,Tank,FALSE,3,ALL,TRUE
+bn_recon,Reconnaissance,FALSE,4,ALL,TRUE
+bn_art,Field Artillery,FALSE,5,ALL,TRUE
+bn_td,Tank Destroyer,FALSE,6,ALL,TRUE
+bn_eng,Combat Engineer,FALSE,7,ALL,TRUE
