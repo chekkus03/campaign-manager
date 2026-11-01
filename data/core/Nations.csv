@@ -1,0 +1,5 @@
+nation_id,name,flag_url,active
+GER,Germany,https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Germany_%281935%E2%80%931945%29.svg,TRUE
+UK,United Kingdom,https://upload.wikimedia.org/wikipedia/commons/a/ae/Flag_of_the_United_Kingdom.svg,TRUE
+US,United States,https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States_%281912%E2%80%931959%29.svg,TRUE
+CAN,Canada,https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%281921%E2%80%931957%29.svg,TRUE
