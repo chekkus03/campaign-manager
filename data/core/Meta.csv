@@ -1,0 +1,5 @@
+key,value,note
+schema_version,1,Bump only when columns change
+data_version,1.0.0,Bump on every rules change; saved in player saves
+updated,2026-11-01,YYYY-MM-DD
+ruleset_name,Normandy 1944 Campaign,Shown on splash screen
