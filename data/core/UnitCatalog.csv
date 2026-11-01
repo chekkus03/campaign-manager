@@ -1,0 +1,6 @@
+unit_id,nation,category,name,mobility_id,fp,at,flak,def,max_steps,notes,active,deprecated_by
+inf_line,ALL,Infantry,Line Rifle Squad,foot,2,0,0,1,,Standard rifle squad,TRUE,
+inf_smg,ALL,Infantry,SMG / Assault Section,foot,3,0,0,1,,Close quarters assault,TRUE,
+inf_at,ALL,Infantry,Anti-Tank / AT Team,foot,1,3,0,1,,Anti-tank asset,TRUE,
+arm_med,ALL,Armored,Medium Tank (Sherman / Pz IV),armd,5,6,1,5,,Main battle tank,TRUE,
+arm_heavy,ALL,Armored,Heavy Tank (Tiger / Firefly / Panther),armd,7,8,1,7,,Heavy breakthrough tank,TRUE,
