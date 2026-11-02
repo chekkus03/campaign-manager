@@ -1,4 +1,4 @@
-unit_id,nation,category,class,name,mobility,battalion_types,tags,fp,at,flak,def,notes,deprecated_by
+id,nation,category,class,name,mobility,battalion_types,tags,fp,at,flak,def,notes,deprecated_by
 us_rifle,us,Infantry,Squad,US Rifle Squad,Foot,Infantry|Armored Infantry,,,,,,12-man; M1 Garand + BAR + Springfield sniper,
 us_para,us,Infantry,Squad,US Parachute Rifle Squad,Foot,Infantry|Armored Infantry,airborne,,,,,12-man; M1 Carbines + light machine guns,
 us_recon,us,Recon,Squad,US Recon / Cavalry Squad,Foot,Reconnaissance,,,,,,10-man; M1 Carbines + Thompsons + radio,
