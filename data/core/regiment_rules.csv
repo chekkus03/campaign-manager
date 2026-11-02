@@ -1,6 +1,6 @@
 rule_id,priority,reg_type,core_bn_type,min_core,allowed_others,requires_transport,nation,active
-rr_mot,1,Motorized,bn_inf,3,,TRUE,ALL,TRUE
-rr_inf,2,Infantry,bn_inf,3,,FALSE,ALL,TRUE
-rr_mech,3,Mechanized,bn_ainf,2,bn_tank|bn_recon|bn_eng,FALSE,ALL,TRUE
-rr_armd,4,Armored,bn_tank,2,bn_ainf|bn_td|bn_recon,FALSE,ALL,TRUE
-rr_art,5,Artillery,bn_art,2,bn_td|bn_eng,FALSE,ALL,TRUE
+rr_mot,1,Motorized,Infantry,3,,true,ALL,TRUE
+rr_inf,2,Infantry,Infantry,3,,false,ALL,TRUE
+rr_mech,3,Mechanized,Armored Infantry,2,Tank|Reconnaissance|Combat Engineer,false,ALL,TRUE
+rr_armd,4,Armored,Tank,2,Armored Infantry|Tank Destroyer|Reconnaissance,false,ALL,TRUE
+rr_art,5,Artillery,Field Artillery,2,Tank Destroyer|Combat Engineer,false,ALL,TRUE
