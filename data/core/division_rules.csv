@@ -1,4 +1,4 @@
-rule_id,div_type,reg_a,reg_b,reg_c,note,active
+id,div_type,reg_a,reg_b,reg_c,note,active
 div_inf,Infantry,Infantry,Infantry,Artillery,,TRUE
 div_mot,Motorized,Motorized,Motorized,Artillery,,TRUE
 div_mech,Mechanized,Mechanized,Mechanized,Artillery,,TRUE
