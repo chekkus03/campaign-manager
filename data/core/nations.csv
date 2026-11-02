@@ -1,4 +1,4 @@
-nation_id,name,short_name,flag_image_url
+id,name,short_name,flag_image_url
 us,United States,US,assets/flags/us.svg
 uk,United Kingdom,UK,assets/flags/uk.svg
 cdn,Canada,CDN,assets/flags/cdn.svg
