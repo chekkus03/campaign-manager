@@ -1,5 +1,5 @@
-nation_id,name,flag_url,active
-GER,Germany,,true
-UK,United Kingdom,,true
-US,United States,,true
-CAN,Canada,,true
+nation_id,name,short_name,flag_image_url
+us,United States,US,assets/flags/us.svg
+uk,United Kingdom,UK,assets/flags/uk.svg
+cdn,Canada,CDN,assets/flags/cdn.svg
+ger,Germany,GER,assets/flags/ger_substitute.svg
