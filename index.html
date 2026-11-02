@@ -5,6 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Strategic Campaign & Regimental Manager</title>
+  <script>
+  // Force users out of the direct repository URL
+  if (window.location.hostname.includes("github.io") && !window.location.pathname.includes("/normandy-campaign-wargame/")) {
+    
+    // Extract just the game name from the current path
+    const siteName = window.location.pathname.replace(/^\/|\/$/g, ''); 
+    
+    // Bounce them directly to your preferred grouped folder path
+    window.location.replace("https://" + window.location.hostname + "/normandy-campaign-wargame/tools" + siteName);
+  }
+</script>
   <style>
     :root {
       --bg-color: #121417;
