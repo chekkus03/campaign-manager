@@ -1,8 +1,8 @@
-type_id,name,truck_eligible,sort,nations,active
-bn_inf,Infantry,TRUE,1,ALL,TRUE
-bn_ainf,Armored Infantry,FALSE,2,ALL,TRUE
-bn_tank,Tank,FALSE,3,ALL,TRUE
-bn_recon,Reconnaissance,FALSE,4,ALL,TRUE
-bn_art,Field Artillery,FALSE,5,ALL,TRUE
-bn_td,Tank Destroyer,FALSE,6,ALL,TRUE
-bn_eng,Combat Engineer,FALSE,7,ALL,TRUE
+type_id,name,notes,sort,nations,active
+infantry,Infantry,Foot or truck-borne,1,ALL,TRUE
+armored_infantry,Armored Infantry,Half-track or carrier equipped,2,ALL,TRUE
+tank,Tank,,3,ALL,TRUE
+reconnaissance,Reconnaissance,,4,ALL,TRUE
+field_artillery,Field Artillery,,5,ALL,TRUE
+tank_destroyer,Tank Destroyer,,6,ALL,TRUE
+combat_engineer,Combat Engineer,,7,ALL,TRUE
