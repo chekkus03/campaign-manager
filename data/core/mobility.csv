@@ -1,5 +1,5 @@
-mobility_id,name,rank,fuel_per_hex
-foot,Foot,1,0
-mot,Motorized,2,
-mech,Mechanized,3,
-armd,Armored,4,
+mobility_id,name,rank,notes
+foot,Foot,1,Includes towed guns until a transport is attached
+motorized,Motorized,2,Trucks
+mechanized,Mechanized,3,Half-tracks / carriers / wheeled armored cars
+armored,Armored,4,Fully tracked AFVs and SP guns
