@@ -1,7 +1,0 @@
-rule_id,div_type,reg_a,reg_b,reg_c,note,active
-dr_inf,Infantry,Infantry,Infantry,Artillery,,TRUE
-dr_mot,Motorized,Motorized,Motorized,Artillery,,TRUE
-dr_mech,Mechanized,Mechanized,Mechanized,Artillery,,TRUE
-dr_inf_ovr,Infantry,Mechanized,Infantry,Artillery,Override: defaults down to Infantry,TRUE
-dr_armd_a,Armored,Armored,Mechanized,Artillery,,TRUE
-dr_armd_b,Armored,Armored,Armored,Artillery,,TRUE
