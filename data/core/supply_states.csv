@@ -1,4 +1,4 @@
-state_id,label,multiplier,sort
+id,label,multiplier,sort
 supplied,Supplied,1,1
 low_ammo,Low Ammo,0.75,2
 isolated,Isolated,0.5,3
