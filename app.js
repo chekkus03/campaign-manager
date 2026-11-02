@@ -20,12 +20,7 @@ const DEFAULT_CATALOG = [
 
     const TF_NAMES = ["Able", "Baker", "Charlie", "Dog", "Easy", "Fox", "George", "How", "Item", "Jig", "King", "Love"];
 
-    const NATION_FLAGS = {
-      "Germany": "https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Germany_%281935%E2%80%931945%29.svg",
-      "United Kingdom": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Flag_of_the_United_Kingdom.svg",
-      "United States": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States_%281912%E2%80%931959%29.svg",
-      "Canada": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%281921%E2%80%931957%29.svg"
-    };
+const NATION_FLAGS = {}; // flags removed for now; see assets/flags when added
 
     let campaignData = null;
     let appSettings = { enforceRegRules: true, enforceDivRules: true };
