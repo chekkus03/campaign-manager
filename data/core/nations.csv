@@ -1,5 +1,5 @@
-id,name,short_name,flag_image_url
-us,United States,US,assets/flags/us.svg
-uk,United Kingdom,UK,assets/flags/uk.svg
-cdn,Canada,CDN,assets/flags/cdn.svg
-ger,Germany,GER,assets/flags/ger_substitute.svg
+id,name,short_name,flag_image_url,deprecated_by,status
+us,United States,US,assets/flags/us.svg,,
+uk,United Kingdom,UK,assets/flags/uk.svg,,
+cdn,Canada,CDN,assets/flags/cdn.svg,,
+ger,Germany,GER,assets/flags/ger_substitute.svg,,
