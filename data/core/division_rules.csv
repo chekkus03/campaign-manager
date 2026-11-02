@@ -1,7 +1,7 @@
-id,div_type,reg_a,reg_b,reg_c,note,active
-div_inf,Infantry,Infantry,Infantry,Artillery,,TRUE
-div_mot,Motorized,Motorized,Motorized,Artillery,,TRUE
-div_mech,Mechanized,Mechanized,Mechanized,Artillery,,TRUE
-div_mech_override,Infantry,Mechanized,Infantry,Artillery,Override: defaults down to Infantry,TRUE
-div_arm_a,Armored,Armored,Mechanized,Artillery,,TRUE
-div_arm_b,Armored,Armored,Armored,Artillery,,TRUE
+id,div_type,reg_a,reg_b,reg_c,note,active,deprecated_by,status
+div_inf,Infantry,Infantry,Infantry,Artillery,,TRUE,,
+div_mot,Motorized,Motorized,Motorized,Artillery,,TRUE,,
+div_mech,Mechanized,Mechanized,Mechanized,Artillery,,TRUE,,
+div_mech_override,Infantry,Mechanized,Infantry,Artillery,Override: defaults down to Infantry,TRUE,,
+div_arm_a,Armored,Armored,Mechanized,Artillery,,TRUE,,
+div_arm_b,Armored,Armored,Armored,Artillery,,TRUE,,
