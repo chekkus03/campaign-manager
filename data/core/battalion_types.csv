@@ -1,8 +1,9 @@
 id,name,notes,sort,nations,active,deprecated_by,status
 infantry,Infantry,Foot or truck-borne,1,ALL,TRUE,,
 armored_infantry,Armored Infantry,Half-track or carrier equipped,2,ALL,TRUE,,
-tank,Tank,,3,ALL,TRUE,,
+tank,Tank,Only tanks,3,ALL,TRUE,,
 reconnaissance,Reconnaissance,,4,ALL,TRUE,,
 field_artillery,Field Artillery,,5,ALL,TRUE,,
 tank_destroyer,Tank Destroyer,,6,ALL,TRUE,,
 combat_engineer,Combat Engineer,,7,ALL,TRUE,,
+armored,Armored,,,,,,
