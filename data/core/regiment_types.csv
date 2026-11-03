@@ -1,0 +1,7 @@
+id,name,sort,nations,active,deprecated_by,status
+motorized,Motorized,,,,,
+infantry,Infantry,,,,,
+mechanized,Mechanized,,,,,
+armored,Armored,,,,,
+artillery,Artillery,,,,,
+airborne,Airborne,,,,,
