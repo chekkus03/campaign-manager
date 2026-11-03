@@ -6,7 +6,8 @@
   "files": [
     "core/units.csv", "core/nations.csv", "core/battalion_types.csv",
     "core/mobility.csv", "core/regiment_rules.csv",
-    "core/division_rules.csv", "core/changelog.csv", "supply_states.csv", 
-    "task_force_names.csv", "limits and meta.csv"
+    "core/division_rules.csv", "core/changelog.csv", "core/supply_states.csv", 
+    "core/task_force_names.csv", "core/limits and meta.csv", "core/regiment_types.csv",
+    "core/division_types.csv"
   ]
 }
