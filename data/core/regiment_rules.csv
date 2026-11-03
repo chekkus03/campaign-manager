@@ -1,6 +1,7 @@
 id,priority,reg_type,core_bn_type,min_core,allowed_others,requires_transport,nation,active,deprecated_by,status
-rr_mot,1,Motorized,Infantry,3,,true,ALL,TRUE,,
-rr_inf,2,Infantry,Infantry,3,,false,ALL,TRUE,,
-rr_mech,3,Mechanized,Armored Infantry,2,Tank|Reconnaissance|Combat Engineer,false,ALL,TRUE,,
-rr_armd,4,Armored,Tank,2,Armored Infantry|Tank Destroyer|Reconnaissance,false,ALL,TRUE,,
-rr_art,5,Artillery,Field Artillery,2,Tank Destroyer|Combat Engineer,false,ALL,TRUE,,
+rr_mot,1,motorized,infantry,3,,true,ALL,TRUE,,
+rr_inf,2,infantry,infantry,3,,false,ALL,TRUE,,
+rr_mech,3,mechanized,armored_infantry,2,tank|Armor|reconnaissance|combat_engineer,false,ALL,TRUE,,
+rr_armd,4,armored,tank|armor,2,armored_infantry|tank_destroyer|reconnaissance,false,ALL,TRUE,,
+rr_art,5,artillery,field_artillery,2,tank_destroyer|combat_engineer,false,ALL,TRUE,,
+,,airborne,,,,,,,,
