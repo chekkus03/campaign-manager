@@ -1,7 +1,9 @@
-id,div_type,reg_a,reg_b,reg_c,note,active,deprecated_by,status
-div_inf,Infantry,Infantry,Infantry,Artillery,,TRUE,,
-div_mot,Motorized,Motorized,Motorized,Artillery,,TRUE,,
-div_mech,Mechanized,Mechanized,Mechanized,Artillery,,TRUE,,
-div_mech_override,Infantry,Mechanized,Infantry,Artillery,Override: defaults down to Infantry,TRUE,,
-div_arm_a,Armored,Armored,Mechanized,Artillery,,TRUE,,
-div_arm_b,Armored,Armored,Armored,Artillery,,TRUE,,
+id,name,div_type,reg_a,reg_b,reg_c,nations,note,active,deprecated_by,status
+div_inf,Infantry,infantry,infantry,infantry,artillery,ALL,,TRUE,,
+div_mot,Motorized,motorized,motorized,motorized,artillery,ALL,,TRUE,,
+div_mech,Mechanized,mechanized,mechanized,mechanized,artillery,ALL,,TRUE,,
+div_mech_override,Infantry,infantry,mechanized,infantry,artillery,ALL,Override: defaults down to Infantry,TRUE,,
+div_arm_a,Armored,armored,armored,mechanized,artillery,us|cdn|uk,,TRUE,,
+div_arm_b,Armored,armored,armored,armored,artillery,us|cdn|uk,,TRUE,,
+div_abn,Airborne,airborne,airborne,airborne,,ALL,,,,
+div_arm_ger,Panzer,armored,armored,mechanized,mechanized,ger,,,,
